@@ -20,6 +20,16 @@ class HomeViewController: UITableViewController {
         
         loadTweets()
         
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 150
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        self.loadTweets();
+        
     }
     
     func loadTweets() {
@@ -70,6 +80,14 @@ class HomeViewController: UITableViewController {
         let imgUrl = URL(string: (user["profile_image_url_https"] as? String)!)
 
         cell.profileImage.af_setImage(withURL: imgUrl!)
+        
+        // For Fav and Retweet
+        
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+        
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
+        
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
         
         return cell
     
